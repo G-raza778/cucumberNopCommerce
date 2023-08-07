@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "./src/test/resources/features/createCustomer.feature",
 glue = "stepDefinitions", dryRun = false, monochrome = true, plugin = {
-		"pretty","json:target/cucumberReports/htmlReport3.json" })
+		"pretty","html:target/cucumberReports/htmlReport5.html" })
 public class testRun {
 
 }

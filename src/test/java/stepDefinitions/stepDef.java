@@ -1,10 +1,12 @@
 package stepDefinitions;
 
+import java.awt.AWTException;
 import java.time.Duration;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,20 +14,26 @@ import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import pageObjects.addNewCustomerPAge;
 import pageObjects.loginPAge;
+import pageObjects.searchCustomerPAge;
 
 public class stepDef {
 	public WebDriver driver;
 	public loginPAge lp;
 	public addNewCustomerPAge anc;
+	public searchCustomerPAge scp;
 
 	@Given("when user launches chrome browser")
 	public void when_user_launches_chrome_browser() {
 		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--remote-allow-origins=*");
+
+		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		lp = new loginPAge(driver);
 		anc=new addNewCustomerPAge(driver);
+		scp=new searchCustomerPAge(driver);
 	}
 
 	@When("user navigates to URL {string}")
@@ -116,15 +124,16 @@ public void user_can_see_add_new_customer_option() {
 }
 
 @When("user enters all info")
-public void user_enters_all_info() {
-anc.emailTF("abc@gamil.com");
+public void user_enters_all_info() throws AWTException {
+anc.emailTF("azxefc1a@gmail.com");
 anc.passwordTf("kisiKoBatanaNahi");
 anc.fname("gulam");
 anc.lname("raza");
 anc.selectGEnderMale();
 anc.dobCalender("02/21/1995");
 anc.companyTF("raza enterprises");
-anc.newsLetterTF("Your store name");
+//anc.newsLetterTF("Your store name");
+anc.newsLetterTF();
 anc.vendorSelectList("Vendor 1");
 
 }
@@ -144,6 +153,21 @@ public void user_can_see_confirmation_message(String actual) {
 	  Assert.assertTrue(true);
   }
 }
+/////////////////////////////////////////////Search by email and validating by table data//////////////////////////
+@When("user enters email in search BY email text field")
+public void user_enters_email_in_search_by_email_text_field() {
+scp.searchEmailTF("victoria_victoria@nopCommerce.com");
+}
 
+@When("clicks on search button")
+public void clicks_on_search_button() {
+scp.searchBT();
+}
+
+@Then("customer details is vissible")
+public void customer_details_is_vissible() {
+String expectedEmail="victoria_victoria@nopCommerce.com";
+Assert.assertTrue(scp.verifyByEmailFromTable(expectedEmail));
+}
 
 }

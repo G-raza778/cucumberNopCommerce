@@ -1,5 +1,9 @@
 package pageObjects;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,106 +12,129 @@ import org.openqa.selenium.support.ui.Select;
 
 public class addNewCustomerPAge {
 	public WebDriver ldriver;
-public addNewCustomerPAge(WebDriver rdriver) {
-	ldriver=rdriver;
-	PageFactory.initElements(ldriver,this);
-}
-@FindBy(xpath = "//a[@href=\"#\"]/p[contains(text(),'Customers')]")
-WebElement customerMenu;
 
-@FindBy(xpath = "//a[@href=\"/Admin/Customer/List\"]/p[contains(text(),'Customers')]")
-WebElement customerList;
+	public addNewCustomerPAge(WebDriver rdriver) {
+		ldriver = rdriver;
+		PageFactory.initElements(ldriver, this);
+	}
 
-@FindBy(xpath = "//a[@class=\"btn btn-primary\"]")
-WebElement addNewButton;
+	@FindBy(xpath = "//a[@href=\"#\"]/p[contains(text(),'Customers')]")
+	WebElement customerMenu;
 
-@FindBy(className ="float-left")
-WebElement customersTitle;
+	@FindBy(xpath = "//a[@href=\"/Admin/Customer/List\"]/p[contains(text(),'Customers')]")
+	WebElement customerList;
 
-@FindBy(id ="Email")
-WebElement emailTF;
+	@FindBy(xpath = "//a[@class=\"btn btn-primary\"]")
+	WebElement addNewButton;
 
-@FindBy(id ="Password")
-WebElement passwordTF;
+	@FindBy(className = "float-left")
+	WebElement customersTitle;
 
-@FindBy(id ="FirstName")
-WebElement fNameTF;
+	@FindBy(id = "Email")
+	WebElement emailTF;
 
-@FindBy(id ="LastName")
-WebElement lNameTF;
+	@FindBy(id = "Password")
+	WebElement passwordTF;
 
-@FindBy(id ="Gender_Male")
-WebElement genderRB;
+	@FindBy(id = "FirstName")
+	WebElement fNameTF;
 
-@FindBy(id ="DateOfBirth")
-WebElement DOB;
+	@FindBy(id = "LastName")
+	WebElement lNameTF;
 
-@FindBy(id ="Company")
-WebElement CompanyTF;
+	@FindBy(id = "Gender_Male")
+	WebElement genderRB;
 
-@FindBy(xpath = "//select[@id=\"SelectedNewsletterSubscriptionStoreIds\"]")
-WebElement newsletterSelectList;
+	@FindBy(id = "DateOfBirth")
+	WebElement DOB;
 
-@FindBy(id ="VendorId")
-WebElement manageVendorSelectList;
+	@FindBy(id = "Company")
+	WebElement CompanyTF;
 
-@FindBy(xpath = "//button[@name=\"save\"]")
-WebElement saveBT;
+	@FindBy(xpath = "//label[.=\"Newsletter\"]/parent::div/parent::div/following-sibling::div/descendant::div[@class=\"k-widget k-multiselect k-multiselect-clearable\"]")
+	WebElement newsletterSelectList;
 
-@FindBy(xpath = "//div[@class=\"content-header\"]")
-WebElement dashboardTitle;
+	@FindBy(id = "VendorId")
+	WebElement manageVendorSelectList;
 
-@FindBy(xpath = "//div[@class=\"alert alert-success alert-dismissable\"]/button")
-WebElement confirmationMSG;
+	@FindBy(xpath = "//button[@name=\"save\"]")
+	WebElement saveBT;
 
-public String confirmationMsg() {
-	return confirmationMSG.getText();
-}
-public String getPAgeTitle() {
-	return ldriver.getTitle();
-}
-public void customerMenu() {
-	customerMenu.click();
-}
-public void customerSubMenu() {
-	customerList.click();
-}
-public void addNewCustomer() {
-	addNewButton.click();
-}
-public String customerTitle() {
-	return customersTitle.getText();
-}
-public void emailTF(String email) {
-	emailTF.sendKeys(email);
-}
-public void passwordTf(String password) {
-	passwordTF.sendKeys(password);
-}
-public void fname(String fNAme) {
-	fNameTF.sendKeys(fNAme);
-}
-public void lname(String lNAme) {
-	lNameTF.sendKeys(lNAme);
-}
-public void selectGEnderMale() {
-	genderRB.click();
-}
-public void dobCalender(String ddmmyyyy) {
-	DOB.sendKeys(ddmmyyyy);
-}
-public void companyTF(String cNAme) {
-	CompanyTF.sendKeys(cNAme);
-}
-public void newsLetterTF(String text) {
-	Select s=new Select(newsletterSelectList);
-	s.selectByVisibleText(text);
-}
-public void vendorSelectList(String vendorText) {
-	Select s=new Select(manageVendorSelectList);
-	s.selectByVisibleText(vendorText);
-}
-public void saveButton() {
-	saveBT.click();
-}
+	@FindBy(xpath = "//div[@class=\"content-header\"]")
+	WebElement dashboardTitle;
+
+	@FindBy(xpath = "//div[@class=\"alert alert-success alert-dismissable\"]/button")
+	WebElement confirmationMSG;
+
+	public String confirmationMsg() {
+		return confirmationMSG.getText();
+	}
+
+	public String getPAgeTitle() {
+		return ldriver.getTitle();
+	}
+
+	public void customerMenu() {
+		customerMenu.click();
+	}
+
+	public void customerSubMenu() {
+		customerList.click();
+	}
+
+	public void addNewCustomer() {
+		addNewButton.click();
+	}
+
+	public String customerTitle() {
+		return customersTitle.getText();
+	}
+
+	public void emailTF(String email) {
+		emailTF.sendKeys(email);
+	}
+
+	public void passwordTf(String password) {
+		passwordTF.sendKeys(password);
+	}
+
+	public void fname(String fNAme) {
+		fNameTF.sendKeys(fNAme);
+	}
+
+	public void lname(String lNAme) {
+		lNameTF.sendKeys(lNAme);
+	}
+
+	public void selectGEnderMale() {
+		genderRB.click();
+	}
+
+	public void dobCalender(String ddmmyyyy) {
+		DOB.sendKeys(ddmmyyyy);
+	}
+
+	public void companyTF(String cNAme) {
+		CompanyTF.sendKeys(cNAme);
+	}
+
+	public void newsLetterTF() throws AWTException {
+		newsletterSelectList.click();
+		Robot r = new Robot();
+		r.keyPress(KeyEvent.VK_DOWN);
+		r.keyRelease(KeyEvent.VK_DOWN);
+		r.keyPress(KeyEvent.VK_ENTER);
+		r.keyRelease(KeyEvent.VK_ENTER);
+//	Select s=new Select(newsletterSelectList);
+//	s.selectByVisibleText(text);
+	}
+
+	public void vendorSelectList(String vendorText) {
+		Select s = new Select(manageVendorSelectList);
+		s.selectByVisibleText(vendorText);
+	}
+
+	public void saveButton() {
+		saveBT.click();
+	}
 }
